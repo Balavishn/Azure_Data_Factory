@@ -7,7 +7,39 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "Date",
+				"type": "date"
+			},
+			{
+				"name": "Narration",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Chq./Ref.No.",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Value Dt",
+				"type": "date"
+			},
+			{
+				"name": "Withdrawal Amt.",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "Deposit Amt.",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "Closing Balance",
+				"type": "real",
+				"precision": 7
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "salary"
