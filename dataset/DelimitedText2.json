@@ -1,0 +1,53 @@
+{
+	"name": "DelimitedText2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "data_fe51dc6a-0ee6-42ba-b8bc-a129d26ecf20_05289443-754a-4a57-baac-df4b16b0b8a7.csv",
+				"container": "csvfile"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "Narration",
+				"type": "String"
+			},
+			{
+				"name": "Chq./Ref.No.",
+				"type": "String"
+			},
+			{
+				"name": "Value Dt",
+				"type": "String"
+			},
+			{
+				"name": "Withdrawal Amt.",
+				"type": "String"
+			},
+			{
+				"name": "Deposit Amt.",
+				"type": "String"
+			},
+			{
+				"name": "Closing Balance",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

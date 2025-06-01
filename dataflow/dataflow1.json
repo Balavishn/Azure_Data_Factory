@@ -1,0 +1,77 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Date as string,",
+				"          Narration as string,",
+				"          {Chq./Ref.No.} as string,",
+				"          {Value Dt} as string,",
+				"          {Withdrawal Amt.} as string,",
+				"          {Deposit Amt.} as string,",
+				"          {Closing Balance} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 cast(output(",
+				"          Date as date 'dd/MM/yy',",
+				"          Narration as string,",
+				"          {Chq./Ref.No.} as string,",
+				"          {Value Dt} as date 'dd/MM/yy',",
+				"          {Withdrawal Amt.} as float,",
+				"          {Deposit Amt.} as float,",
+				"          {Closing Balance} as float",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 filter(isNull(Date)==false()) ~> filter1",
+				"filter1 derive(each(match(regexMatch(type,'float')), $$ = iifNull($$, 0, $$))) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
